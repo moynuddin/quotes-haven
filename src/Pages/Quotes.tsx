@@ -1,25 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
-import chroma from "chroma-js";
+
 import { motion } from "framer-motion";
 
 import styles from "./Quotes.module.css";
-import ContentPasteIcon from "@mui/icons-material/ContentPaste";
-import CheckIcon from "@mui/icons-material/Check";
+
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 import "../App.css";
-
-type TQuote = {
-  id: number;
-  author: string;
-  quote: string;
-  color: string;
-};
-
-type TColors = {
-  [key: number]: string;
-};
+import Quote from "../Components/Quote";
+import { TQuote, TColors } from "../types/quotes.types";
+import { getRandomGradient, getTextColor } from "../utility/colors";
 
 const Quotes = () => {
   const [quotes, setQuotes] = useState<TQuote[]>([]);
@@ -40,39 +31,6 @@ const Quotes = () => {
     document.body.className = theme;
   }, [theme]);
 
-  const getRandomColor = useCallback(() => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }, []);
-
-  const getRandomGradient = useCallback(() => {
-    const color1 = getRandomColor();
-    const color2 = getRandomColor();
-    const color3 = getRandomColor();
-    return `linear-gradient(135deg, ${color1}, ${color2}, ${color3})`;
-  }, [getRandomColor]);
-
-  const getTextColor = useCallback((bgColor: string) => {
-    const colorArray = bgColor.match(/#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})/g);
-
-    if (colorArray && colorArray.length > 0) {
-      const firstColor = colorArray[0];
-
-      const baseColor = chroma(firstColor);
-
-      const contrastingColor = baseColor.set("hsl.h", "+180").hex();
-
-      const isLight = baseColor.luminance() > 0.5;
-
-      return isLight ? contrastingColor : "#ffffff";
-    }
-    return "#ffffff";
-  }, []);
-
   const fetchQuotes = useCallback(async () => {
     setIsLoading(true);
     const response = await fetch(
@@ -80,8 +38,12 @@ const Quotes = () => {
         page * quotesPerPage
       }`
     );
+    const quotable = await fetch(
+      `https://api.quotable.io/quotes?page=${page}&limit=${quotesPerPage}`
+    );
     const { quotes } = await response.json();
-    console.log(quotes);
+    const { results } = await quotable.json();
+    console.log(results);
 
     const initialColors = quotes.reduce((acc: TColors, quote: TQuote) => {
       acc[quote.id] = getRandomGradient();
@@ -91,7 +53,7 @@ const Quotes = () => {
     setQuotes((prev) => [...prev, ...quotes]);
     setColors((prev) => ({ ...prev, ...initialColors }));
     setIsLoading(false);
-  }, [page, quotesPerPage, getRandomGradient]);
+  }, [page, quotesPerPage]);
 
   useEffect(() => {
     fetchQuotes();
@@ -145,7 +107,7 @@ const Quotes = () => {
                 opacity: 1,
                 scale: 1.25,
                 transition: {
-                  duration: 1,
+                  duration: 0.5,
                 },
               }}
               viewport={{
@@ -159,34 +121,17 @@ const Quotes = () => {
                 backgroundPosition: "0% 50%",
               }}
             >
-              <p
-                className={styles.quote}
-                style={{
-                  color: textColor,
-                }}
-              >
-                &quot; {quote?.quote}&quot;
-              </p>
-              <div className={styles.footer} style={{ color: textColor }}>
-                <div
-                  className={styles.copy}
-                  onClick={() => handleIcon(quote, index)}
-                  aria-live="polite"
-                  title="copy"
-                >
-                  {isCopied === index ? (
-                    <CheckIcon className={styles.copyIcon} />
-                  ) : (
-                    <ContentPasteIcon className={styles.copyIcon} />
-                  )}
-                </div>
-
-                <p className={styles.author}>&#45;{quote?.author}</p>
-              </div>
+              <Quote
+                quote={quote}
+                textColor={textColor}
+                isCopied={isCopied}
+                handleIcon={handleIcon}
+                index={index}
+              />
             </motion.div>
           );
         })}
-        {isLoading && <p>Loading more quotes...</p>}
+        {isLoading && <p>Loading quotes...</p>}
       </div>
     </>
   );

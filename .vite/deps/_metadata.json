@@ -1,0 +1,76 @@
+{
+  "hash": "b541e9ce",
+  "configHash": "d50ca393",
+  "lockfileHash": "fd3dc96a",
+  "browserHash": "37a82ec9",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "4de286be",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "fbe2fbe0",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "75aff307",
+      "needsInterop": true
+    },
+    "chroma-js": {
+      "src": "../../node_modules/chroma-js/index.js",
+      "file": "chroma-js.js",
+      "fileHash": "9a0d3ba0",
+      "needsInterop": false
+    },
+    "framer-motion": {
+      "src": "../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "5039b055",
+      "needsInterop": false
+    },
+    "@mui/icons-material/ContentPaste": {
+      "src": "../../node_modules/@mui/icons-material/esm/ContentPaste.js",
+      "file": "@mui_icons-material_ContentPaste.js",
+      "fileHash": "1a820698",
+      "needsInterop": false
+    },
+    "@mui/icons-material/Check": {
+      "src": "../../node_modules/@mui/icons-material/esm/Check.js",
+      "file": "@mui_icons-material_Check.js",
+      "fileHash": "8d2ee644",
+      "needsInterop": false
+    },
+    "@mui/icons-material/LightMode": {
+      "src": "../../node_modules/@mui/icons-material/esm/LightMode.js",
+      "file": "@mui_icons-material_LightMode.js",
+      "fileHash": "c14df192",
+      "needsInterop": false
+    },
+    "@mui/icons-material/DarkMode": {
+      "src": "../../node_modules/@mui/icons-material/esm/DarkMode.js",
+      "file": "@mui_icons-material_DarkMode.js",
+      "fileHash": "8fac6f94",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-N6IZNREI": {
+      "file": "chunk-N6IZNREI.js"
+    },
+    "chunk-OWUTDXDK": {
+      "file": "chunk-OWUTDXDK.js"
+    },
+    "chunk-65KY755N": {
+      "file": "chunk-65KY755N.js"
+    },
+    "chunk-V4OQ3NZ2": {
+      "file": "chunk-V4OQ3NZ2.js"
+    }
+  }
+}

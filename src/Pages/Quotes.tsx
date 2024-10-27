@@ -38,13 +38,8 @@ const Quotes = () => {
         page * quotesPerPage
       }`
     );
-    const quotable = await fetch(
-      `https://api.quotable.io/quotes?page=${page}&limit=${quotesPerPage}`
-    );
-    const { quotes } = await response.json();
-    const { results } = await quotable.json();
-    console.log(results);
 
+    const { quotes } = await response.json();
     const initialColors = quotes.reduce((acc: TColors, quote: TQuote) => {
       acc[quote.id] = getRandomGradient();
       return acc;

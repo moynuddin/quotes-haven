@@ -3,6 +3,7 @@ import styles from "./Quotes.module.css";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import CheckIcon from "@mui/icons-material/Check";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import XIcon from "@mui/icons-material/X";
 
 import { TQuote } from "../types/quotes.types";
 
@@ -21,6 +22,21 @@ const Quote = ({
   handleIcon,
   index,
 }: QuoteProps) => {
+  const handleInstagram = (quote: TQuote) => {
+    const quoteText = encodeURIComponent(`"${quote.quote}" - ${quote.author}`);
+    const url = `https://www.instagram.com/create/story?media=&caption=${quoteText}`;
+
+    // Open the URL in a new tab
+    window.open(url, "_blank");
+  };
+  const handleTwitter = (quote: TQuote) => {
+    const tweetText = encodeURIComponent(`"${quote.quote}" - ${quote.author}`);
+    const url = `https://twitter.com/intent/tweet?text=${tweetText}`;
+
+    // Open the URL in a new tab
+    window.open(url, "_blank");
+  };
+
   return (
     <>
       <p
@@ -39,7 +55,7 @@ const Quote = ({
           title="copy"
         >
           {isCopied === index ? (
-            <CheckIcon className={styles.copyIcon} />
+            <CheckIcon className={styles.copyIcon} sx={{ fontSize: 14 }} />
           ) : (
             <ContentPasteIcon className={styles.copyIcon} />
           )}
@@ -48,7 +64,20 @@ const Quote = ({
         <p className={styles.author}>&#45;{quote?.author}</p>
       </div>
       <div className={styles.social}>
-        <InstagramIcon sx={{ fontSize: 15 }} />
+        <span
+          className={styles.instagram}
+          onClick={() => handleInstagram(quote)}
+          style={{ color: textColor }}
+        >
+          <InstagramIcon sx={{ fontSize: 15 }} />
+        </span>
+        <span
+          className={styles.twitter}
+          onClick={() => handleTwitter(quote)}
+          style={{ color: textColor }}
+        >
+          <XIcon sx={{ fontSize: 15 }} />
+        </span>
       </div>
     </>
   );

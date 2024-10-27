@@ -1,5 +1,5 @@
 .quote{
-    font-size: 22px;
+    font-size: 16px;
     font-weight: 600;
     text-align: justify;
     font-family: 'Caveat', cursive;
@@ -17,6 +17,10 @@
     cursor: pointer;
     
 }
+.copyIcon{
+  font-size: 14px !important;
+}
+
 
 
 .copyIcon:hover{
@@ -28,7 +32,7 @@
 
 .author{
     text-align: right;
-    font-size: 22px;
+    font-size: 14px;
     font-style: italic;
     font-family: 'Allura', cursive;
     font-weight: 600;
@@ -36,7 +40,7 @@
 }
 
 
-.body.light {
+/* .body.light {
     background-color: #ffffff !important;
     color: #000000 !important;
   }
@@ -44,23 +48,49 @@
   body.dark {
     background-color: #121212 !important;
     color: #ffffff !important;
-  }
+  } */
 
 
   .social{
     display: flex;
     justify-content: flex-end;
+    gap: 6px;
+    
+  }
+
+  .instagram, 
+  .twitter{
+    cursor: pointer;
+    padding: 5px;
+    transition: background .5s ease-in-out;
+  }
+
+  .instagram:hover{
+    background-color: rgba(240, 255, 255, 0.349);
+  }
+  .twitter:hover{
+    background-color: rgba(240, 255, 255, 0.349);
   }
 
 
-/* @keyframes gradientAnimation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  } */
+  @media only screen and (min-width:1025px){
+    .quote{
+      font-size: 22px;
+      /* font-weight: 600;
+      text-align: justify;
+      font-family: 'Caveat', cursive;
+      cursor: default; */
+  }
+  .author{
+    /* text-align: right; */
+    font-size: 22px;
+    /* font-style: italic;
+    font-family: 'Allura', cursive;
+    font-weight: 600;
+    cursor: default; */
+}
+
+.copyIcon{
+  font-size: 24px !important;
+}
+  }

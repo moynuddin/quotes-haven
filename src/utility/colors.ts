@@ -18,25 +18,25 @@ const generateRandomDeg = () => {
   return deg;
 };
 
-const getRandomShape = () => {
-  const shapes = ["circle", "ellipse"];
+// const getRandomShape = () => {
+//   const shapes = ["circle", "ellipse"];
 
-  const shape = shapes[Math.floor(Math.random() * shapes.length)];
-  return shape;
-};
+//   const shape = shapes[Math.floor(Math.random() * shapes.length)];
+//   return shape;
+// };
 
-const getRandomSize = () => {
-  const sizes = [
-    "closest-side",
-    "farthest-side",
-    "closest-corner",
-    "farthest-corner",
-  ];
+// const getRandomSize = () => {
+//   const sizes = [
+//     "closest-side",
+//     "farthest-side",
+//     "closest-corner",
+//     "farthest-corner",
+//   ];
 
-  const size = sizes[Math.floor(Math.random() * sizes.length)];
+//   const size = sizes[Math.floor(Math.random() * sizes.length)];
 
-  return size;
-};
+//   return size;
+// };
 
 export const getRandomGradient = () => {
   const color1 = getRandomColor();

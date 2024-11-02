@@ -1,8 +1,9 @@
 export type TQuote = {
-  id: number;
+  _id: number;
   author: string;
-  quote: string;
+  content: string;
   color: string;
+  tags: string[];
 };
 
 export type TColors = {

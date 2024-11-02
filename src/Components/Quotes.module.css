@@ -21,7 +21,28 @@
   font-size: 14px !important;
 }
 
+.tags{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+}
 
+.tag{
+  padding: 5px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+  cursor: default;
+  font-family: 'Caveat', cursive;
+  filter: drop-shadow(2px 4px 6px #353535);
+  color: #000;
+  transition: transform .5s ease-out;
+}
+
+.tag:hover{
+  transform: scale(1.1);
+}
 
 .copyIcon:hover{
     background-color: rgba(240, 255, 255, 0.349);

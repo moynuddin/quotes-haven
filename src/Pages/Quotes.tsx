@@ -11,12 +11,16 @@ import "../App.css";
 import Quote from "../Components/Quote";
 import { TQuote, TColors } from "../types/quotes.types";
 import { getRandomGradient, getTextColor } from "../utility/colors";
+import Search from "../Components/Search";
+import Connection from "../Components/Connection";
 
 const Quotes = () => {
   const [quotes, setQuotes] = useState<TQuote[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const [isCopied, setIsCopied] = useState<number | null>(null);
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [inputSearch, setInputSearch] = useState("");
   const [colors, setColors] = useState<{
     [key: number]: string;
   }>({});
@@ -33,19 +37,23 @@ const Quotes = () => {
 
   const fetchQuotes = useCallback(async () => {
     setIsLoading(true);
-    const response = await fetch(
-      `https://dummyjson.com/quotes?limit=${quotesPerPage}&skip=${
-        page * quotesPerPage
-      }`
+    // const response = await fetch(
+    //   `https://dummyjson.com/quotes?limit=${quotesPerPage}&skip=${
+    //     page * quotesPerPage
+    //   }`
+    // );
+
+    const quotable = await fetch(
+      `https://api.quotable.io/quotes?page=${page}&limit=${quotesPerPage}`
     );
 
-    const { quotes } = await response.json();
-    const initialColors = quotes.reduce((acc: TColors, quote: TQuote) => {
-      acc[quote.id] = getRandomGradient();
+    const { results } = await quotable.json();
+    console.log(results);
+    const initialColors = results.reduce((acc: TColors, quote: TQuote) => {
+      acc[quote._id] = getRandomGradient();
       return acc;
     }, {});
-
-    setQuotes((prev) => [...prev, ...quotes]);
+    setQuotes((prev) => [...prev, ...results]);
     setColors((prev) => ({ ...prev, ...initialColors }));
     setIsLoading(false);
   }, [page, quotesPerPage]);
@@ -72,7 +80,7 @@ const Quotes = () => {
   const handleIcon = async (quote: TQuote, index: number) => {
     try {
       setIsCopied(index);
-      await navigator.clipboard.writeText(quote?.quote);
+      await navigator.clipboard.writeText(quote?.content);
       setTimeout(() => {
         setIsCopied(null);
       }, 2000);
@@ -82,8 +90,30 @@ const Quotes = () => {
     }
   };
 
+  const openModal = () => {
+    setOpen(true);
+  };
+
+  const closeModal = () => {
+    setOpen(false);
+    setInputSearch("");
+    console.log(filteredData);
+  };
+
+  const filteredData = quotes.filter((quote) =>
+    quote.author.toLowerCase().includes(inputSearch.toLowerCase())
+  );
+
   return (
     <>
+      <Connection />
+      <Search
+        openModal={openModal}
+        closeModal={closeModal}
+        open={open}
+        inputSearch={inputSearch}
+        setInputSearch={setInputSearch}
+      />
       <div className={styles.navWrapper}>
         <p className={styles.logo}>Quotes Haven</p>
         <div onClick={toggleTheme}>
@@ -92,7 +122,7 @@ const Quotes = () => {
       </div>
       <div className={styles.wrapper}>
         {quotes?.map((quote: TQuote, index: number) => {
-          const textColor = getTextColor(colors[quote.id]);
+          const textColor = getTextColor(colors[quote._id]);
           return (
             <motion.div
               initial={{
@@ -111,7 +141,7 @@ const Quotes = () => {
               key={index}
               className={styles.quotesContainer}
               style={{
-                backgroundImage: colors[quote?.id],
+                backgroundImage: colors[quote?._id],
                 backgroundSize: "400% 400%", // Ensure size matches the animation
                 backgroundPosition: "0% 50%",
               }}

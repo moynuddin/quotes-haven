@@ -23,14 +23,18 @@ const Quote = ({
   index,
 }: QuoteProps) => {
   const handleInstagram = (quote: TQuote) => {
-    const quoteText = encodeURIComponent(`"${quote.quote}" - ${quote.author}`);
+    const quoteText = encodeURIComponent(
+      `"${quote.content}" - ${quote.author}`
+    );
     const url = `https://www.instagram.com/create/story?media=&caption=${quoteText}`;
 
     // Open the URL in a new tab
     window.open(url, "_blank");
   };
   const handleTwitter = (quote: TQuote) => {
-    const tweetText = encodeURIComponent(`"${quote.quote}" - ${quote.author}`);
+    const tweetText = encodeURIComponent(
+      `"${quote.content}" - ${quote.author}`
+    );
     const url = `https://twitter.com/intent/tweet?text=${tweetText}`;
 
     // Open the URL in a new tab
@@ -45,7 +49,7 @@ const Quote = ({
           color: textColor,
         }}
       >
-        &quot; {quote?.quote}&quot;
+        &quot; {quote?.content}&quot;
       </p>
       <div className={styles.footer} style={{ color: textColor }}>
         <div
@@ -78,6 +82,17 @@ const Quote = ({
         >
           <XIcon sx={{ fontSize: 15 }} />
         </span>
+      </div>
+      <div className={styles.tags}>
+        {quote.tags.map((tag, index) => (
+          <div
+            className={styles.tag}
+            key={index + 1}
+            style={{ backgroundColor: textColor }}
+          >
+            {tag}
+          </div>
+        ))}
       </div>
     </>
   );
